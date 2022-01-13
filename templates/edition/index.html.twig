@@ -1,0 +1,47 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Edition index{% endblock %}
+
+{% block body %}
+<div class="content">
+    <div class="card card-stats">
+        <div class="card-header">
+            <a class="btn btn-dark" href="{{ path('edition_new') }}">Create new</a>
+        </div>
+        <div class="card-body ">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Status</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for edition in editions %}
+            <tr>
+                <td>{{ edition.id }}</td>
+                <td>{{ edition.libelle }}</td>
+                <td>{{ edition.status }}</td>
+                <td>{{ edition.createdAt ? edition.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ edition.updatedAt ? edition.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('edition_show', {'id': edition.id}) }}">show</a>
+                    <a href="{{ path('edition_edit', {'id': edition.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+        </div></div></div>
+{% endblock %}

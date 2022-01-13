@@ -1,0 +1,46 @@
+<script  type="text/javascript">
+
+    $(function () {
+        $('#completeinternational').hide();
+        $('#completenational').show();
+        $(".vote").click(function () {
+
+        })
+        $('#msform  input:radio').click(function () {
+            if ($(this).val()==="cameroun"){
+                $('#completeinternational').hide();
+                $('#completenational').show();
+            }else {
+                $('#completeinternational').show();
+                $('#completenational').hide();
+            }
+        })
+
+    });
+
+function getItemCandidat(id) {
+    $(function () {
+        $.ajax({
+            url: "{{ path('getcandidat_ajax') }}",
+            type: "GET",
+            dataType: "JSON",
+            data: {
+                item_id: id,
+            },
+            success: function (data) {
+                console.log(data.firstname);
+                $("#imagesjs").html("");
+                $("#name_titre").text(data.firstname);
+                $("#name").text(data.firstname+" "+data.lastname);
+                $("#candidat_id").val(data.id);
+              //  $("#imagesjs").append(" <img src='{{ asset('backend/images/default-avatar.png') }}' class='img-responsive img-rounded'>");
+                $("#imagesjs").append(' <img src="/uploads/'+data.photo+'" class="img-responsive img-rounded">');
+                },
+            error: function (err) {
+
+            }
+        });
+    });
+}
+</script>
+

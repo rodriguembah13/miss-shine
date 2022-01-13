@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Miss Shine Entrepreneuriat {% endblock %}</title>
+        <!-- Basic -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('front/css/layout.css') }}">
+            <link rel="stylesheet" href="{{ asset('front/css/animate.min.css') }}">
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
+            <!-- Site CSS -->
+            <link rel="stylesheet" href="{{ asset('front/css/owl.carousel.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('front/css/owl.theme.default.min.css') }}">
+            <!-- ALL VERSION CSS -->
+            <link rel="stylesheet" href="{{ asset('front/css/default.css') }}">
+            <!-- ALL VERSION CSS -->
+            <link rel="stylesheet" href="{{ asset('front/css/custom.css') }}">
+            <!-- ALL VERSION CSS -->
+           <link rel="stylesheet" href="{{ asset('front/css/font-awesome.min.css') }}">
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="{{ asset('front/css/jquery.bxslider.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('front/style.css') }}">
+        {% endblock %}
+
+
+    </head>
+    <body class="seo_version">
+    {% include '_partials/header.html.twig' %}
+    {% block body %}
+        {% endblock %}
+    {% include '_partials/footer.html.twig' %}
+    {% block javascripts %}
+        <!-- ALL JS FILES-->
+        <script src="{{ asset('front/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('front/js/popper.min.js') }}"></script>
+        <script src="{{ asset('front/js/owl.carousel.min.js') }}"></script>
+        <script src="{{ asset('front/js/jquery.mobilemenu.js') }}"></script>
+        <script src="{{ asset('front/js/jquery.bxslider.min.js') }}"></script>
+        <script src="{{ asset('front/js/jquery.backtotop.js') }}"></script>
+        <script src="{{ asset('front/js/jquery.bootstrap.wizard.min.js') }}"></script>
+        <script src="{{ asset('front/js/form-wizard.init.js') }}"></script>
+        <script src="{{ asset('front/js/animate.js') }}"></script>
+       <script src="{{ asset('front/js/main.js') }}"></script>
+    {% endblock %}
+    </body>
+</html>

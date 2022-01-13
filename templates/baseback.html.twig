@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <title>{% block title %}Miss shine!{% endblock %}</title>
+    {% block stylesheets %}
+        <link href="{{ asset('backend/css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('backend/css/paper-dashboard.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('backend/css/demo.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('datatable/datatables.min.css') }}">
+    {% endblock %}
+</head>
+<body>
+<div class="wrapper ">
+    {% include "_partials/_siderbar.html.twig" %}
+    {% include "_partials/_hearder.html.twig" %}
+    {% block body %}
+
+
+
+    {% endblock %}
+    {% include "_partials/_footer.html.twig" %}
+</div>
+{% block javascripts %}
+    <!--   Core JS Files   -->
+    <script src="{{ asset('backend/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend/js/popper.min.js') }}"></script>
+    <script src="{{ asset('backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('backend/js/perfect-scrollbar.jquery.min.js') }}"></script>
+
+    <!-- Chart JS -->
+    <script src="{{ asset('backend/js/chartjs.min.js') }}"></script>
+    <!--  Notifications Plugin    -->
+    <script src="{{ asset('backend/js/bootstrap-notify.js') }}"></script>
+    <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ asset('backend/js/paper-dashboard.min.js') }}" type="text/javascript"></script>
+    <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+    <script src="{{ asset('backend/js/demo.js') }}"></script>
+    <script src="{{ asset('datatable/datatables.min.js') }}"></script>
+{% endblock %}
+</body>
+</html>

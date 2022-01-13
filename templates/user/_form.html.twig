@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-8">
+        {{ form_row(form.fullName) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
+        {{ form_row(form.roles) }}
+    </div>
+    <div class="col-md-4">
+        {% if user.imageFilename is defined and user.imageFilename  is not null %}
+            <img id="img_emp" class="img img-responsive img-thumbnail" style="width:140px;height: 140px"
+                 src="{{ asset('uploads/' ~ user.imageFilename) }}" title="my image"
+                 alt="My image">
+        {% else %}  <img id="img_emp" class="img img-responsive img-thumbnail" style="width:140px;height: 140px"
+                         src="{{ asset('assets/images/default_avatar.png') }}" title="my image"
+                         alt="My image">
+        {% endif %}
+        {{ form_row(form.imageFilename) }}
+    </div>
+</div>
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

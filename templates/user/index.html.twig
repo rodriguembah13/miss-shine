@@ -1,0 +1,51 @@
+{% extends 'baseback.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('datatable/datatables.min.css') }}">
+{% endblock %}
+{% block title %}Patient index{% endblock %}
+
+{% block body %}
+<div class="content">
+    <!-- Basic table card start -->
+    <div class="card">
+        <div class="card-header">
+            <a class="btn btn-success" href="{{ path('user_new') }}"><i class="icofont icofont-plus"></i>
+                Nouveau</a>
+        </div>
+        <div class="card-block table-border-styl">
+            <table class="table" id="table_user">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom Complet</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Roles</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>
+                            <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% endblock %}
+    {% block javascripts %}
+    {{ parent() }}
+    {% include 'user/javascript.html.twig' %}
+{% endblock %}

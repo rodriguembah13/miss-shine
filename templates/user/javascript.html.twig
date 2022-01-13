@@ -1,0 +1,68 @@
+<script src="{{ asset('datatable/datatables.min.js') }}"></script>
+<script  type="text/javascript">
+    $(document).ready(function () {
+        // $('.table-responsive').hide();
+        $('#table_user').DataTable({
+            columnDefs: [
+
+                {//date
+                    visible: true,
+                    targets: 0,
+                    className: 'text-center',
+                    render: function (data, type, full, meta) {
+                        return  data;
+                    }
+                },
+                {//name
+                    visible: true,
+                    targets: 1,
+                    className: 'text-center',
+                    render: function (data, type, full, meta) {
+                        return  data;
+                    }
+                },
+                {//action
+                    visible: true,
+                    targets: 5,
+                    className: "text-center",
+                    render: function (data, type, full, meta) {
+//console.log(data);
+                        return '<div class="btn-group btn-group-sm"><a id="editBtn" class="btn btn-success btn-sm" type="button"  href="/user/'+data.id+'/edit"><i class="ti-pencil"></i></a>' +
+                            '<button id="deleteBtn" class="btn btn-danger  btn-sm" name="deleteBtn" type="button" ><i class="ti-trash"></i></button></div>';
+
+                    }
+                }
+            ],
+            ajax:{
+                url:  '{{ path('user_index_ajax') }}',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(data){
+
+                    populateDataTable(data);
+                },
+                error: function (e) {
+                    console.log("There was an error with your request...");
+                    console.log("error: " + JSON.stringify(e));
+                }
+            }//ajax
+
+        }); // table
+
+        function populateDataTable(data) {
+            $("#table_user").DataTable().clear();
+            var row = 1;
+            $.each(data, function (index, value) {
+                $('#table_user').dataTable().fnAddData( [
+                    row,
+                    value.fullname,
+                    value.email,
+                    value.username,
+                    value.roles,
+                    value
+                ]);
+
+                row++;
+            });
+        }})
+</script>

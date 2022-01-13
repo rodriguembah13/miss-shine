@@ -1,0 +1,38 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Edition{% endblock %}
+
+{% block body %}
+    <h1>Edition</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ edition.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ edition.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ edition.status }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ edition.createdAt ? edition.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ edition.updatedAt ? edition.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('edition_index') }}">back to list</a>
+
+    <a href="{{ path('edition_edit', {'id': edition.id}) }}">edit</a>
+
+    {{ include('edition/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Candidat index{% endblock %}
+
+{% block body %}
+<div class="content">
+    <div class="card card-stats">
+        <div class="card-header">
+            <a class="btn btn-dark" href="{{ path('candidat_new') }}">Create new</a>
+        </div>
+        <div class="card-body ">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Photo</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Description</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for candidat in candidats %}
+            <tr>
+                <td>{{ candidat.id }}</td>
+                <td>{% if candidat.photo %}
+                    <img src="{{ asset('uploads/' ~ candidat.photo) }}" height="40">
+                    {% else %}
+                        <img src="{{ asset('backend/images/default-avatar.png') }}" height="40">
+                        {% endif %}
+                </td>
+                <td>{{ candidat.firstname }}</td>
+                <td>{{ candidat.lastname }}</td>
+                <td>{{ candidat.description }}</td>
+                <td>{{ candidat.createdAt ? candidat.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                    <a class="btn btn-primary" href="{{ path('candidat_show', {'id': candidat.id}) }}">show</a>
+                    <a class="btn btn-sm" href="{{ path('candidat_edit', {'id': candidat.id}) }}">edit</a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div></div></div>
+{% endblock %}

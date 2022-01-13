@@ -1,0 +1,43 @@
+<div class="sidebar" data-color="white" data-active-color="danger">
+    <div class="logo">
+        {# <a href="{{ path('dashboard') }}" class="simple-text logo-mini">
+           <div class="logo-image-small">
+                <img src="{{ asset('front/images/logo.png') }}">
+            </div>
+            <!-- <p>CT</p> -->
+        </a>#}
+        <a href="#" class="simple-text logo-normal">
+            <div class="logo-image-big">
+                <img src="{{ asset('front/images/logo.png') }}">
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li {% if app.request.attributes.get( '_route' ) starts with 'dashboard' %} class="active"{% else %} class="" {% endif%} >
+                <a href="{{ path('dashboard') }}">
+                    <i class="nc-icon nc-bank"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li {% if app.request.attributes.get( '_route' ) starts with 'candidat_' %} class="active"{% else %} class="" {% endif%}>
+                <a href="{{ path('candidat_index') }}">
+                    <i class="nc-icon nc-diamond"></i>
+                    <p>Candidat</p>
+                </a>
+            </li>
+            <li{% if app.request.attributes.get( '_route' ) starts with 'edition_' %} class="active"{% else %} class="" {% endif%}>
+                <a href="{{ path('edition_index') }}">
+                    <i class="nc-icon nc-chart-bar-32"></i>
+                    <p>Edition</p>
+                </a>
+            </li>
+            <li{% if app.request.attributes.get( '_route' ) starts with 'vote_' %} class="active"{% else %} class="" {% endif%}>
+                <a href="{{ path('vote_index') }}">
+                    <i class="nc-icon nc-money-coins"></i>
+                    <p>Votes</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

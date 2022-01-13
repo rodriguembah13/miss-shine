@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Miss Shine Entrepreneuriat {% endblock %}
+
+{% block body %}
+    <div class="brand-carousel-wrapper light-blue-bg  wow fadeIn">
+        <div class="container">
+            <div class="brand-carousel owl-carousel owl-theme">
+                <div class="item">
+                    <img src="{{ asset('images/brand-1.png') }}" alt=""/>
+                </div><!-- /.item -->
+                <div class="item">
+                    <img src="{{ asset('images/brand-4.png') }}" alt=""/>
+                </div><!-- /.item -->
+                <div class="item">
+                    <img src="{{ asset('images/brand-2.png') }}" alt=""/>
+                </div><!-- /.item -->
+                <div class="item">
+                    <img src="{{ asset('images/brand-3.png') }}" alt=""/>
+                </div><!-- /.item -->
+                <div class="item">
+                    <img src="{{ asset('images/brand-1.png') }}" alt=""/>
+                </div><!-- /.item -->
+                <div class="item">
+                    <img src="{{ asset('images/brand-5.png') }}" alt=""/>
+                </div><!-- /.item -->
+            </div><!-- /.brand-carousel -->
+        </div><!-- /.thm-container -->
+    </div>
+    <section class="about-me-area pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class=" card personal-thumb mb-30">
+                        <div class="card-img">
+                            <img src="{{ asset('uploads/' ~ candidat.photo) }}" alt="" height="300">
+                        </div>
+                    </div>
+                    {# <div class="my-img position-relative mb-50">
+                        <img src="{{ asset('uploads/' ~ candidat.photo) }}" alt="">
+                        <div class="my-style">
+                            <img src="{{ asset('front/images/me/my_cemera.png') }}" alt="">
+                        </div>
+                    </div> #}
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="about-me-top">
+                                <h2>{{ candidat.firstname }} {{ candidat.lastname }}</h2>
+                                {% if candidat.position == 1 %}
+                                    <p>Position: 1ere</p>
+                                {% else %}
+                                    <p>Position: {{ candidat.position }} eme</p>
+                                {% endif %}
+                                <p>Nombres de votes: {{ candidat.vote }}</p>
+                                <article>{{ candidat.description }}
+                                </article>
+                            </div>
+                            <hr>
+                            <div id="basicwizard">
+                                <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-4">
+                                    <li class="nav-item">
+                                        <a href="#basictab1" data-bs-toggle="tab" data-toggle="tab"
+                                           class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-account-circle me-1"></i>
+                                            <span class="d-none d-sm-inline">Au cameroun</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#basictab2" data-bs-toggle="tab" data-toggle="tab"
+                                           class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-face-profile me-1"></i>
+                                            <span class="d-none d-sm-inline">A L'international</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content b-0 mb-0 pt-0">
+                                    <div class="tab-pane" id="basictab1">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <form id="msform" method="post" name="nationalpay"
+                                                      action="{{ path('sendpaiementcinetpay') }}">
+                                                    <input name="candidatid" class="hidden"
+                                                           value="{{ candidat.id }}">
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-12">
+                                                            <label class="control-label" for="clientphone">
+                                                                Téléphone:</label>
+                                                            <input class="form-control" name="clientphone"
+                                                                   id="clientphone">
+                                                        </div>
+                                                        <div class="mb-3 col-md-12">
+                                                            <label class="control-label" for="clientvote">
+                                                                Nombres de votes:</label>
+                                                            <select class="form-control" name="clientvote"
+                                                                    id="clientvote">
+                                                                <option value="1"> 100 fcfa 1vote</option>
+                                                                <option value="5"> 300 fcfa 5votes</option>
+                                                                <option value="7"> 500 fcfa 7votes</option>
+                                                                <option value="15"> 1000 fcfa 15votes</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <button type="button"
+                                                                class="btn btn-warning waves-effect waves-light mr-2">
+                                                            Partage
+                                                            le lien
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-primary waves-effect waves-light">Je
+                                                            vote
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div> <!-- end col -->
+                                        </div> <!-- end row -->
+                                    </div>
+
+                                    <div class="tab-pane" id="basictab2">
+
+                                        <form id="msforminternational" method="post" name="msforminternational"
+                                              action="{{ path('sendpaiementcinetpayinternational') }}">
+                                            <input name="candidatid" class="hidden" id="candidat_id"
+                                                   value="{{ candidat.id }}">
+                                            <div class="row">
+                                                <div class="mb-3 col-md-12">
+                                                    <label class="control-label" for="clientphone">
+                                                        Téléphone:</label>
+                                                    <input class="form-control" name="clientphone"
+                                                           id="clientphone">
+                                                </div>
+                                                <div class="mb-3 col-md-12">
+                                                    <label class="control-label" for="clientemail">
+                                                        Email:</label>
+                                                    <input class="form-control" type="email" name="clientemail"
+                                                           id="clientemail">
+                                                </div>
+                                                <div class="mb-3 col-md-12">
+                                                    <label class="control-label" for="clientintvote">
+                                                        Nombres de votes:</label>
+                                                    <select class="form-control" name="clientintvote"
+                                                            id="clientintvote">
+                                                        <option value="10"> 20 $ 10vote</option>
+                                                        <option value="50"> 30 $ 50votes</option>
+                                                        <option value="70"> 50 $ 70votes</option>
+                                                        <option value="150"> 100 $ 150votes</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <button type="button"
+                                                        class="btn btn-warning waves-effect waves-light mr-2">
+                                                    Partage le lien
+                                                </button>
+                                                <button type="submit"
+                                                        class="btn btn-primary waves-effect waves-light">Je vote
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+                </div>
+
+            </div> <!-- tab-content -->
+        </div> <!-- end #basicwizard-->
+
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'default/javascript.html.twig' %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Vote index{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="card card-stats">
+            <div class="card-body ">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Candidat</th>
+                        <th>NombreVote</th>
+                        <th>Monaie</th>
+                        <th>Status</th>
+                        <th>CreatedAt</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for vote in votes %}
+                        <tr>
+                            <td>{{ vote.id }}</td>
+                            <td>{{ vote.candidat }}</td>
+                            <td>{{ vote.nombreVote }}</td>
+                            <td>{{ vote.monaie }}</td>
+                            <td>{{ vote.status }}</td>
+                            <td>{{ vote.createdAt ? vote.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
+                                <a href="{{ path('vote_show', {'id': vote.id}) }}">show</a>
+                                <a href="{{ path('vote_edit', {'id': vote.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
