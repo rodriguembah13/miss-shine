@@ -582,3 +582,6 @@ section > section {
 }
 
 /**====== Authentication-page css end ======**/
+.card-body {
+    padding: 1.25rem !important;
+}

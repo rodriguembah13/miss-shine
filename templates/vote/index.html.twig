@@ -7,7 +7,7 @@
         <div class="card card-stats">
             <div class="card-body ">
 
-                <table class="table">
+              {#  <table class="table">
                     <thead>
                     <tr>
                         <th>Id</th>
@@ -39,8 +39,17 @@
                         </tr>
                     {% endfor %}
                     </tbody>
-                </table>
+                </table>#}
+                <div id="votes">{{ 'loading'|trans({}, 'messages') }}</div> </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#votes').initDataTables({{ datatable_settings(datatable) }});
+        });
+    </script>
 {% endblock %}

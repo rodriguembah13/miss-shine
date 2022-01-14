@@ -1,0 +1,8 @@
+{% if value is defined and value  is not null %}
+    <img id="img_emp" class="img img-responsive img-thumbnail" style="width:80px;height: 80px"
+         src="{{ asset('uploads/' ~ value) }}" title="my image"
+         alt="My image">
+{% else %}  <img id="img_emp" class="img img-responsive img-thumbnail" style="width:50px;height: 50px"
+                 src="{{ asset('build/images/default_avatar.png') }}" title="my image"
+                 alt="My image">
+{% endif %}

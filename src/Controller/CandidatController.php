@@ -3,8 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Candidat;
+use App\Entity\Vote;
 use App\Form\CandidatType;
 use App\Repository\CandidatRepository;
+use Doctrine\ORM\QueryBuilder;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Omines\DataTablesBundle\Column\DateTimeColumn;
+use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\Column\TwigColumn;
+use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -19,23 +26,84 @@ use Symfony\Component\Routing\Annotation\Route;
 class CandidatController extends AbstractController
 {
     private $candidatRepository;
-
+    private $dataTableFactory;
     /**
      * @param $candidatRepository
      */
-    public function __construct(CandidatRepository $candidatRepository)
+    public function __construct(DataTableFactory $dataTableFactory,CandidatRepository $candidatRepository)
     {
         $this->candidatRepository = $candidatRepository;
+        $this->dataTableFactory = $dataTableFactory;
     }
 
     /**
-     * @Route("/", name="candidat_index", methods={"GET"})
+     * @Route("/", name="candidat_index", methods={"GET","POST"})
      */
-    public function index(CandidatRepository $candidatRepository): Response
+    public function index(Request $request,CandidatRepository $candidatRepository): Response
     {
+        $table = $this->dataTableFactory->create()
+            ->add('idx', TextColumn::class,[
+                'field' => 'e.id',
+                'className'=>"text-center"
+            ])
+            ->add('photo', TwigColumn::class, [
+                'className' => 'bold',
+                'orderable'=>false,
+                'template' => 'candidat/photo.html.twig',
+                'render' => function ($value, $context) {
+                    return $value;
+                }
+            ])
+            ->add('firstname', TextColumn::class, [
+                'field' => 'e.firstname',
+                'className'=>"text-center"
+            ])
+            ->add('lastname', TextColumn::class, [
+                'field' => 'e.lastname',
+                'className'=>"text-center"
+            ])
+            ->add('nombreVote', TextColumn::class,[
+                'label'=>'dt.columns.nombrevote',
+                'className'=>"text-center"
+            ])
+/*            ->add('monaie', TextColumn::class)
+            ->add('status', TextColumn::class, [
+                'className'=>"text-center",
+                'render' => function ($value, $context) {
+                    return '<span>'.$value.'</span>';
+                }
+            ])*/
+            ->add('createdAt',  DateTimeColumn::class, [
+                'format' => 'd-m-Y',
+                'className'=>"text-center",
+                'orderable' => false,
+                'searchable' => false,
+                'label'=>'dt.columns.createdat'
+            ])
+
+            ->add('id', TwigColumn::class, [
+                'className' => 'buttons text-center',
+                'label' => 'action',
+                'template' => 'candidat/buttonbar.html.twig',
+                'render' => function ($value, $context) {
+                    return $value;
+                }])
+            ->createAdapter(ORMAdapter::class, [
+                'entity' => Candidat::class,
+                'query' => function (QueryBuilder $builder) {
+                    $builder
+                        ->select('e')
+                        ->from(Candidat::class, 'e')
+                    ;
+                },
+            ])->handleRequest($request);
+        if ($table->isCallback()) {
+            return $table->getResponse();
+        }
         return $this->render('candidat/index.html.twig', [
-            'candidats' => $candidatRepository->findAll(),
-            'title'=>"Candidats"
+           // 'candidats' => $candidatRepository->findAll(),
+            'title'=>"Candidats",
+            'datatable' => $table
         ]);
     }
 
@@ -72,6 +140,7 @@ class CandidatController extends AbstractController
             }
             $url=uniqid()."-".uniqid();
             $candidat->setGenericurl($url);
+            $candidat->setVote(0);
             $entityManager->persist($candidat);
             $entityManager->flush();
 

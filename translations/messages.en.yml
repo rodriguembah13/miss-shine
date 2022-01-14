@@ -1,0 +1,125 @@
+table:
+  name: Name
+dt:
+  columns:
+    candidat: Candidat
+    designation: Désignation
+    lastname: Nom
+    firstname: Prenom
+    nombrevote: Nombre de votes
+    website: Site web
+    monaie: Monnaie
+    parent: Parent
+    action: Actions
+    adresse: Adresse
+    description: Description
+    createdat: Date de creation
+    idx: N°
+    photo: Photo
+    quantity: Quantité
+    warehouse: Site
+    supply: Fournisseur
+    tva: Tva
+    product: Produit
+    total: Total Ht
+    phone: téléphone
+    birthday: Birthday
+    totaltax: Total tax
+    totalwithtax: Total avec tax
+    customer: Client
+    reference: Reference
+    operator: Responsable
+    status: Status
+    manufacturer: Marque
+    category: Categorie
+    operation: Operation
+    createdAt: Date creation
+    quantity_real: 'Quantitée reél'
+    date_peremption: Date peremption
+    lot: Lot
+    unity: Unité
+    on_sale: On sale?
+    remise: 'Remises'
+    totalttc: 'Total Ttc'
+    paymentMethod: 'Mode paiement'
+    currency: 'Monaie'
+    discount: 'Discount'
+    amount: 'Montant'
+    fullname: Nom complet
+    address: Adresse
+    isPerissable: ce produit est périmable?
+    is_decomposable: produit decomposable?
+    minQuantitySale: quantité minimal à la vente
+    maxQuantitySale: quantité maximal à la vente
+    low_stock_quantity: Seuil du stock
+    weight: Poids
+    length: Taille
+    width: Largeur
+    height: Hauteur
+    modeStock: Mode stokage
+    managestock: Manager stock
+    remaning: Reste
+    total_pay: Total payé
+    principal: Par defaut
+    symbol: Symbole
+    conversion_rate: Valeur de la device
+    iso_code: Code ISO
+    password: Mot de passe
+    roles: Roles
+    registrecommerce: Registre du commerce
+    fax: Fax
+    country: Pays
+sProcessing: "Traitement en cours..."
+sSearch: "Rechercher&nbsp;:"
+sLengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments"
+sInfo: "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments"
+sInfoEmpty: "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment"
+sInfoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)"
+sInfoPostFix: ""
+sLoadingRecords: "Chargement en cours..."
+sZeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher"
+sEmptyTable: "Aucune donn&eacute;e disponible dans le tableau"
+oPaginate:
+  sFirst: "Premier"
+  sPrevious: "Pr&eacute;c&eacute;dent"
+  sNext: "Suivant"
+  sLast: "Dernier"
+oAria:
+  "sSortAscending :": activer pour trier la colonne par ordre croissant"
+  "sSortDescending : ": activer pour trier la colonne par ordre d&eacute;croissant"
+button:
+  show: Détail
+  edit: Editer
+  delete: Supprimer
+  receptionSite: Reception direct
+  updateStock: Modifier Stock
+  supplyStock: Commande en attente
+  mvtStock: Mouvement du stock
+  save: 'Enregistrer'
+  generate: 'Transformer'
+  search: Recherche
+  back: 'Retour'
+  create_and_save: Enregistrer et créer
+  receptionner: 'Receptionner'
+  add: 'Ajouter'
+  interroger: 'Interroger'
+  sendmail: 'Envoyer un mail'
+  print: 'Imprimer'
+  validate: 'Validée'
+  bondelivraison: Bon de Livraison
+  bondereception: Bon de reception
+  bondachat: Bon d'achat
+  bondecommande: Bon de commande
+  facture: Facture
+  sendby: 'Envoyer par'
+  sendsms: 'Envoyer un sms'
+  paiement: 'Paiement'
+  consulter: Consulter
+  choose_language: Choisir la langue
+  duplicate: 'Dupliquer'
+  close: 'Femer'
+  import: 'Importer'
+  checkout: 'Checkout'
+Status: Status
+loading: Chargement...
+active_to: Activé jusqu'au

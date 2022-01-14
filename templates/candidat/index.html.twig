@@ -10,7 +10,7 @@
         </div>
         <div class="card-body ">
 
-    <table class="table">
+            {# <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -49,6 +49,17 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-        </div></div></div>
-{% endblock %}
+    </table> #}
+            <div id="candidats">{{ 'loading'|trans({}, 'messages') }}</div>
+        </div>
+    </div>
+</div>
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            $(document).ready(function () {
+                $('#candidats').initDataTables({{ datatable_settings(datatable) }});
+            });
+        </script>
+    {% endblock %}

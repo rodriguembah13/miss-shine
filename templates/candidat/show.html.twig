@@ -39,7 +39,7 @@
             <hr>
             <div class="card-body ">
                 <p><h5>Nombres de votes: {{ candidat.vote }}</h5></p>
-            </div>
+
             <hr>
             <table class="table">
                 <thead>
@@ -49,7 +49,6 @@
                     <th>Monaie</th>
                     <th>Status</th>
                     <th>CreatedAt</th>
-                    <th>actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -58,7 +57,15 @@
                         <td>{{ vote.id }}</td>
                         <td>{{ vote.nombreVote }}</td>
                         <td>{{ vote.monaie }}</td>
-                        <td>{{ vote.status }}</td>
+                        <td>
+                        {% if vote.status=="PENDING" %}
+                            <span class="btn btn-sm btn-warning">{{ vote.status }}</span>
+                        {% elseif vote.status=="REFUSED" %}
+                            <span class="btn btn-sm btn-danger">{{ vote.status }}</span>
+                        {% else %}
+                            <span class="btn btn-sm btn-success">{{ vote.status }}</span>
+                        {% endif %}
+                        </td>
                         <td>{{ vote.createdAt ? vote.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     </tr>
                 {% else %}
@@ -68,6 +75,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 {% endblock %}
