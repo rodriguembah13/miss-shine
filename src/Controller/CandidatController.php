@@ -6,6 +6,7 @@ use App\Entity\Candidat;
 use App\Entity\Vote;
 use App\Form\CandidatType;
 use App\Repository\CandidatRepository;
+use App\Repository\EditionRepository;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -26,14 +27,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class CandidatController extends AbstractController
 {
     private $candidatRepository;
+    private $editionRepository;
     private $dataTableFactory;
     /**
      * @param $candidatRepository
      */
-    public function __construct(DataTableFactory $dataTableFactory,CandidatRepository $candidatRepository)
+    public function __construct(EditionRepository $editionRepository,DataTableFactory $dataTableFactory,CandidatRepository $candidatRepository)
     {
         $this->candidatRepository = $candidatRepository;
         $this->dataTableFactory = $dataTableFactory;
+        $this->editionRepository=$editionRepository;
     }
 
     /**
@@ -64,15 +67,15 @@ class CandidatController extends AbstractController
             ])
             ->add('nombreVote', TextColumn::class,[
                 'label'=>'dt.columns.nombrevote',
+                'field' => 'e.vote',
                 'className'=>"text-center"
             ])
-/*            ->add('monaie', TextColumn::class)
-            ->add('status', TextColumn::class, [
+/*            ->add('monaie', TextColumn::class)*/
+            ->add('position', TextColumn::class, [
                 'className'=>"text-center",
-                'render' => function ($value, $context) {
-                    return '<span>'.$value.'</span>';
-                }
-            ])*/
+               'label'=>'dt.columns.position',
+
+            ])
             ->add('createdAt',  DateTimeColumn::class, [
                 'format' => 'd-m-Y',
                 'className'=>"text-center",
@@ -94,6 +97,7 @@ class CandidatController extends AbstractController
                     $builder
                         ->select('e')
                         ->from(Candidat::class, 'e')
+                        ->orderBy("e.position","ASC")
                     ;
                 },
             ])->handleRequest($request);
@@ -106,7 +110,32 @@ class CandidatController extends AbstractController
             'datatable' => $table
         ]);
     }
+    protected function generateRang(){
+        $edition=$this->editionRepository->findOneBy(['status'=>'Publie']);
+        $candidats=$this->candidatRepository->findByEdition($edition);
+        foreach ($candidats as $candidat){
+            $j = 0;
+            for ($i = 0; $i < sizeof($candidats); $i++) {
+                if ($candidat->getVote() === $candidats[$i]->getVote()) {
+                    $j = sizeof($candidats) - $i;
+                }
+            }
+            $candidat->setPosition($j);
+        }
+    }
+    protected function getRangVoting(Candidat $candidat)
+    {
+        $edition=$this->editionRepository->findOneBy(['status'=>'Publie']);
+        $candidats=$this->candidatRepository->findByEdition($edition);
 
+        $j = 0;
+        for ($i = 0; $i < sizeof($candidats); $i++) {
+            if ($candidat->getVote() === $candidats[$i]->getVote()) {
+                $j = sizeof($candidats) - $i;
+            }
+        }
+        return $j;
+    }
     /**
      * @Route("/new", name="candidat_new", methods={"GET","POST"})
      */
@@ -142,6 +171,7 @@ class CandidatController extends AbstractController
             $candidat->setGenericurl($url);
             $candidat->setVote(0);
             $entityManager->persist($candidat);
+            $this->generateRang();
             $entityManager->flush();
 
             return $this->redirectToRoute('candidat_index');
@@ -198,7 +228,8 @@ class CandidatController extends AbstractController
             if ($candidat->getGenericurl()==null){
                 $candidat->setGenericurl($url);
             }
-
+           // $candidat->setPosition($this->getRangVoting($candidat));
+$this->generateRang();
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('candidat_index');

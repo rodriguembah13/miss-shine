@@ -17,7 +17,7 @@ dt:
     idx: N°
     photo: Photo
     quantity: Quantité
-    warehouse: Site
+    position: Position
     supply: Fournisseur
     tva: Tva
     product: Produit

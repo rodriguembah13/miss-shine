@@ -8,6 +8,7 @@ use App\Repository\CandidatRepository;
 use App\Repository\EditionRepository;
 use App\Repository\VoteRepository;
 use App\Utils\ClientServer;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -58,6 +59,7 @@ class DefaultController extends AbstractController
             throw  new BadRequestException('This user does not have access to this section.');
         }
         $this->logger->info("-------ic" . $request->get("url"));
+        $this->logger->error("-------ic" . $request->get("url"));
         return $this->render('default/detail-candidat.html.twig', [
             'candidat' => $candidat,
         ]);
@@ -75,6 +77,7 @@ class DefaultController extends AbstractController
         $client_votes = $request->get("clientvote");
         $endpoints = "payment";
         $notify_url = $this->generateUrl('notifyurlajax', ['vote' => $client_votes, 'candidat' => $candidat_id]);
+
         $transaction_id = "";
         $allowed_characters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
         for ($i = 1; $i <= 12; ++$i) {
@@ -85,6 +88,7 @@ class DefaultController extends AbstractController
         $amount = $this->getAmount($client_votes);
         $redirect_url = $this->generateUrl('home');
         $notify_url=$this->params->get('domain').$notify_url;
+        $this->logger->info(strip_tags($notify_url,'/'));
         $data = array(
             'site_id' => $this->params->get('site_id'),
             'currency' => 'XAF',
@@ -101,7 +105,7 @@ class DefaultController extends AbstractController
        // $this->createVote($candidat,$client_votes);
         $client = new ClientServer();
         $response = $client->postfinal($endpoints, $data);
-        dump($response);
+       // dump($response);
       //  $this->logger->info($response);
         if ($response['code'] == "201") {
             $this->createVote($candidat,$client_votes);
@@ -235,6 +239,8 @@ class DefaultController extends AbstractController
             $vote->setStatus($status);
             $candidat=$vote->getCandidat();
             $candidat->setVote($candidat->getVote()+$vote->getNombreVote());
+            $this->generateRang();
+            //$candidat->setPosition($this->getRangVoting($candidat));
         }else{
             $vote->setStatus($status);
         }
@@ -256,6 +262,7 @@ class DefaultController extends AbstractController
      */
     public function notifyurl(Request $request): Response
     {
+        $this->logger->info("notify call");
         $site_id=$_POST['cpm_site_id'];
         $transaction=$_POST['cpm_trans_id'];
         $vote_=$this->voteRepository->find($_GET['vote']);
@@ -275,6 +282,19 @@ class DefaultController extends AbstractController
         }
         }
         return new JsonResponse($response,200);
+    }
+    protected function generateRang(){
+        $edition=$this->editionrepository->findOneBy(['status'=>'Publie']);
+        $candidats=$this->candidatRepository->findByEdition($edition);
+        foreach ($candidats as $candidat){
+            $j = 0;
+            for ($i = 0; $i < sizeof($candidats); $i++) {
+                if ($candidat->getVote() === $candidats[$i]->getVote()) {
+                    $j = sizeof($candidats) - $i;
+                }
+            }
+            $candidat->setPosition($j);
+        }
     }
 
     /**
@@ -337,5 +357,16 @@ class DefaultController extends AbstractController
 
         //return new JsonResponse($data, 200);
     }
-
+    protected function getRangVoting(Candidat $candidat)
+    {
+        $edition=$this->editionrepository->findOneBy(['status'=>'Publie']);
+        $candidats=$this->candidatRepository->findBy(['edition'=>$edition],[]);
+        $j = 0;
+        for ($i = 0; $i < sizeof($candidats); $i++) {
+            if ($candidat->getVote() === $candidats[$i]->getVote()) {
+                $j = sizeof($candidats) - $i;
+            }
+        }
+        return $j;
+    }
 }

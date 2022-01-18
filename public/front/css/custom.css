@@ -809,7 +809,11 @@ pre code {
         max-width: 540px;
     }
 }
-
+@media (max-width: 1200px) {
+    .row0{
+        display: none !important;
+    }
+}
 @media (min-width: 768px) {
     .container {
         max-width: 720px;
